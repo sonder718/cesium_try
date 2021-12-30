@@ -1,0 +1,101 @@
+[
+  {
+    "id":"document",
+    "version":"1.0"
+  },
+  {
+    "id":"Vehicle",
+    "availability":"2012-08-04T16:00:00Z/2012-08-04T17:04:54.9962195740191Z",
+    "label":{
+      "fillColor":[
+        {
+          "interval":"2012-08-04T16:00:00Z/2012-08-04T18:00:00Z",
+          "rgba":[
+            255,255,0,255
+          ]
+        }
+      ],
+      "font":"bold 10pt Segoe UI Semibold",
+      "horizontalOrigin":"CENTER",
+      "outlineColor":{
+        "rgba":[
+          0,0,0,255
+        ]
+      },
+      "pixelOffset":{
+        "cartesian2":[
+          0.0,20.0
+        ]
+      },
+      "scale":1.0,
+      "show":[
+        {
+          "interval":"2012-08-04T16:00:00Z/2012-08-04T18:00:00Z",
+          "boolean":true
+        }
+      ],
+      "style":"FILL",
+      "text":"Test Vehicle",
+      "verticalOrigin":"CENTER"
+    },
+    "model":{
+      "gltf":"CesiumMilkTruck.glb",
+      "minimumPixelSize":100,
+      "maximumScale":50
+    },
+    "orientation" : {
+      "velocityReference": "#position"
+    },
+    "viewFrom": {
+      "cartesian": [ -2080, -1715, 779 ]
+    },
+    "properties" : {
+        "fuel_remaining" : {
+            "epoch":"2012-08-04T16:00:00Z",
+            "number": [
+                0, 22.5,
+                1500, 21.2
+            ]
+        }
+    },
+    "path":{
+      "material":{
+          "solidColor":{
+            "color":{
+                "interval":"2012-08-04T16:00:00Z/2012-08-04T18:00:00Z",
+                "rgba":[
+                  255,255,0,255
+                ]
+              }
+            }
+      },
+      "width":[
+        {
+          "interval":"2012-08-04T16:00:00Z/2012-08-04T18:00:00Z",
+          "number":5.0
+        }
+      ],
+      "show":[
+        {
+          "interval":"2012-08-04T16:00:00Z/2012-08-04T18:00:00Z",
+          "boolean":true
+        }
+      ]
+    },
+    "position":{
+      "interpolationAlgorithm":"LAGRANGE",
+      "interpolationDegree":1,
+      "epoch":"2012-08-04T16:00:00Z",
+      "cartographicDegrees":[
+        0.0,114.60765838623048, 30.46051187513064,0.5,
+        1e2,114.60113525390625, 30.488917676126846,0.5,
+        1.5e3,114.48234558105469, 30.492467818499154,0.5,
+        2.0e3,114.45075988769531, 30.488325973138874,0.5,
+        2.5e3,114.41617012023926, 30.498310479123308,0.5,
+        3.0e3,114.41788673400879, 30.509255278561035,0.5,
+        4.0e3,114.39291000366211, 30.50888554192688,0.5
+        5.0e3,114.39574241638184, 30.520494601161047,0.5
+      ]
+    }
+  }
+]

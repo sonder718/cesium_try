@@ -1,0 +1,85 @@
+[{
+        "id": "document",
+        "name": "SampleFlight",
+        "version": "1.0",
+        "clock": {
+            "interval": "20170711T16Z/20170711T1620Z",
+            "currentTime": "20170711T16Z",
+            "multiplier": 2,
+            "range": "LOOP_STOP",
+            "step": "SYSTEM_CLOCK_MULTIPLIER"
+        }
+    },
+    {
+        "id": "Aircraft/Aircraft1",
+        "name": "Aircraft1",
+        "availability": "202101221T16Z/202101231T162001.65996549888041Z",
+        "billboard": {
+            "color": {
+                "rgba": [
+                    0,
+                    255,
+                    255,
+                    255
+                ]
+            },
+            "eyeOffset": {
+                "cartesian": [
+                    0,
+                    0,
+                    0
+                ]
+            },
+            "horizontalOrigin": "CENTER",
+            "image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAjSURBVChTYyAa/EcDUGEIgIphAKg0XRSAAFQMDqDChAADAwDC13+BJ+0oDwAAAABJRU5ErkJgggAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+            "pixelOffset": {
+                "cartesian2": [
+                    0,
+                    0
+                ]
+            },
+            "scale": 1,
+            "show": true,
+            "verticalOrigin": "CENTER"
+        },
+        "path": {
+            "show": [{
+                "interval": "202101221T16Z/202101231T162001.65996549888041Z",
+                "boolean": true
+            }],
+            "width": 1,
+            "material": {
+                "solidColor": {
+                    "color": {
+                        "rgba": [
+                            0,
+                            255,
+                            255,
+                            255
+                        ]
+                    }
+                }
+            },
+            "resolution": 1200
+        },
+        "position": {
+            "interpolationAlgorithm": "LAGRANGE",
+            "interpolationDegree": 1,
+            "epoch": "202101221T16Z",
+            "cartesian": [
+                0,
+                114.304408,
+                30.614473,
+                370,
+                91.86139701440516,
+                114.305,
+                30.614473,
+                370,
+                2001.86139701440516,
+                114.306,
+                30.614473,
+                370
+            ]
+        }
+    }
+]

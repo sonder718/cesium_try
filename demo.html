@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Use correct character set. -->
+    <meta charset="utf-8" />
+    <!-- Tell IE to use the latest, best version. -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+    <title>Hello World!</title>
+    <script src="Build/Cesium/Cesium.js"></script>
+    <script src="http://api.tianditu.gov.cn/cdn/plugins/cesium/cesiumTdt.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@dvgis/cesium-map"></script>
+
+    <style>
+        @import url(Build/Cesium/Widgets/widgets.css);
+        @import url(template/bucket.css);
+        * {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            -moz-user-select: none;
+            -o-user-select: none;
+            -khtml-user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+        
+        .shell {
+            position: absolute;
+            left: 0;
+            width: 480px;
+            height: 700px;
+            background-color: #3352c410;
+        }
+        
+        .buttons {
+            margin: 60px 0;
+            color: #fff;
+        }
+        
+        .li {
+            letter-spacing: 2px;
+            font: 600 17px "";
+            padding: 16px 52px;
+            transition: 0.3s;
+        }
+        
+        .li::after {
+            content: "";
+            position: absolute;
+            left: 20px;
+            margin-top: -22px;
+            display: block;
+            width: 20px;
+            height: 20px;
+            background-color: #fff;
+            border-radius: 50%;
+        }
+        
+        .buttons>li:hover {
+            background-color: #beb5df;
+        }
+        /* .buttons>li {
+            background-color: #beb5df;
+        } */
+        
+        .li ul {
+            width: 0;
+            height: 530px;
+            padding: 60px 0;
+            position: absolute;
+            top: 0;
+            right: 0;
+            overflow: hidden;
+            background-color: #596a9b33;
+            transition: 0.3s;
+        }
+        
+        .li ul .toolbar_num {
+            padding: 16px 24px;
+            transition: 0.3s;
+            position: static;
+            background-color: #828eb9;
+        }
+        
+        .li:hover ul {
+            width: 428px;
+        }
+        
+        .li ul .toolbar_table {
+            padding: 16px 24px;
+            transition: 0.3s;
+            position: static;
+            background-color: #3352c410;
+            /* color: #0436ec; */
+        }
+        
+        html,
+        body,
+        #cesiumContainer {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .cesium-viewer-bottom
+        /* logo信息 */
+        
+        {
+            display: none;
+        }
+        
+        #toolbar_entity,
+        #toolbar {
+            background: rgba(42, 42, 42, 0.486);
+            padding: 4px;
+            border-radius: 4px;
+            position: absolute;
+        }
+        /*表格的输入样式*/
+        
+        #toolbar input {
+            vertical-align: middle;
+            padding-top: 2px;
+            padding-bottom: 2px;
+        }
+        
+        #toolbar table tr {
+            transform: translateY(0);
+            transition: transform 0.4s ease-out;
+        }
+        
+        #toolbar table tr.up {
+            transform: translateY(33px);
+            transition: none;
+        }
+        
+        #toolbar table tr.down {
+            transform: translateY(-33px);
+            transition: none;
+        }
+        
+        .demo-container {
+            background-color: #303336;
+            border-radius: 5px;
+            padding: 5px;
+            margin: 5px 3px;
+        }
+        
+        .demo-container input {
+            vertical-align: middle;
+            margin-top: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="cesiumContainer" class="fullSize"></div>
+    <nav class="shell">
+        <ul class="buttons">
+            <li class="li" id="layermanage">
+                图层管理
+                <ul>
+                    <li class="toolbar_num">影像</li>
+
+                    <div id="toolbar">
+                        <table>
+                            <tbody data-bind="foreach: layers">
+                                <tr data-bind="css: { up: $parent.upLayer === $data, down: $parent.downLayer === $data }">
+                                    <td><input type="checkbox" data-bind="checked: show"></td>
+                                    <td>
+                                        <span data-bind="text: name, visible: !$parent.isSelectableLayer($data)"></span>
+                                        <select data-bind="visible: $parent.isSelectableLayer($data), options: $parent.baseLayers, optionsText: 'name', value: $parent.selectedLayer"></select>
+                                    </td>
+                                    <td>
+                                        <input type="range" min="0" max="1" step="0.01" data-bind="value: alpha, valueUpdate: 'input'">
+                                    </td>
+                                    <td>
+                                        <button type="button" class="cesium-button" data-bind="click: function() { $parent.raise($data, $index()); }, visible: $parent.canRaise($index())">
+                                        ▲
+                                      </button>
+                                    </td>
+                                    <td>
+                                        <button type="button" class="cesium-button" data-bind="click: function() { $parent.lower($data, $index()); }, visible: $parent.canLower($index())">
+                                        ▼
+                                      </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <li class="toolbar_table">
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                    </li>
+                    <li class="toolbar_num">
+                        地形
+                    </li>
+                    <div>
+                        <table>
+                            <tbody id="toolbar_Terrain">
+                                <tr>
+                                    <td><input type="checkbox" data-bind="checked: default_terrain"></td>
+                                    <td>
+                                        <span data-bind="text: default_terrain_name"></span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- <li class="toolbar_num">
+                        <br>
+                    </li> -->
+                    <li class="toolbar_num">
+                        <span id="update_entity">实体Entity与基元Primitives</span></li>
+                    <div>
+                        <table id="toolbar_entity">
+                            <tbody>
+                                <tr>
+                                    <td><input type="checkbox" data-bind="checked: wuhan_bian"></td>
+                                    <td>
+                                        <span data-bind="text: wuhan_bian_name"></span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><input type="checkbox" data-bind="checked: xiaoche"></td>
+                                    <td>
+                                        <span data-bind="text: xiaoche_name"></span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <li class="toolbar_table">
+                        <br>
+                    </li>
+                    <div>
+                        <table id="toolbar_Primitives">
+                            <tbody>
+                                <tr>
+                                    <td><input type="checkbox" data-bind="checked: OSMbuilding"></td>
+                                    <td>
+                                        <span data-bind="text: OSMbuilding_name"></span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><input type="checkbox" data-bind="checked: Wuhanbuilding"></td>
+                                    <td>
+                                        <span data-bind="text: Wuhanbuilding_name"></span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+
+                </ul>
+
+            </li>
+
+            <li class="li">
+                高程与网格
+                <ul>
+                    <li class="toolbar_table">
+                        <br>
+                    </li>
+
+                    <div id="elevation_and_grid_check_id">
+                        <li class="toolbar_num">
+                            <input type="checkbox" data-bind="checked: la_lo_grid"> 绘制经纬度栅格
+                        </li>
+
+                        <li class="toolbar_num">
+                            <input type="checkbox" data-bind=" checked: elevation_show_open">绘等高线
+                        </li>
+                        <li class="toolbar_num">
+                            <input type="checkbox" data-bind=" checked: elevationRamp_show_open">绘高程图
+                        </li>
+                        <li class="toolbar_num">
+                            <input type="checkbox" data-bind=" checked: shading_show_open">绘坡度图
+                        </li>
+                        <!-- <div id="elevation_toolbar">
+                            <div id="zoomButtons"></div>
+                            <div class="demo-container">
+                                <div>
+                                    <label><input type="checkbox" data-bind="checked: enableContour">Enable
+                                  Contour Lines</label>
+                                </div>
+                                <div>
+                                    Spacing
+                                    <input style="width: 136px" type="range" min="1.0" max="500.0" step="1.0" data-bind="value: contourSpacing, valueUpdate: 'input', enable: enableContour">
+                                    <span data-bind="text: contourSpacing"></span>m
+                                </div>
+                                <div>
+                                    Line Width
+                                    <input style="width: 125px" type="range" min="1.0" max="10.0" step="1.0" data-bind="value: contourWidth, valueUpdate: 'input', enable: enableContour">
+                                    <span data-bind="text: contourWidth"></span>px
+                                </div>
+                                <div>
+                                    <button type="button" data-bind="click: changeColor, enable: enableContour">
+                                  Change contour color
+                                </button>
+                                </div>
+                            </div>
+                        </div> -->
+
+                    </div>
+                </ul>
+            </li>
+
+            <li class="li">
+                其他功能
+                <ul>
+                    <li class="toolbar_table">
+                        <br>
+                    </li>
+                    <li class="toolbar_table">
+                        <br>
+                    </li>
+                    <!-- <li class="toolbar_num" id="jump_to_wuhan" onclick="ini_camera_view(wuhan)"> -->
+                    <li class="toolbar_num" id="jump_to_wuhan">
+                        跳转地点
+                        <select id="select_position">
+                            <option value="wuhan_a">武汉汉口</option>
+                            <option value="wuhan_b">中国地质大学</option>
+                            <option value="china">中国</option>
+                            </select>
+                    </li>
+                    <div id="otherfunc_check_id">
+                        <li class="toolbar_num">
+                            <input type="checkbox" data-bind="checked: right_BOX"> 开启右键框选
+                        </li>
+
+                        <li class="toolbar_num">
+                            <input type="checkbox" data-bind=" checked: latlng_show_open "> 开启显示经纬度
+                        </li>
+
+                        <li class="toolbar_num">
+                            <input type="checkbox" data-bind=" checked: left_chick_drawline_open "> 开启点击画线
+                        </li>
+                    </div>
+
+                </ul>
+            </li>
+        </ul>
+    </nav>
+    <div id="latlng_show" style="width:340px;height:30px;position:absolute;bottom:40px;right:200px;z-index:1;font-size:15px; ">
+        <div style="width:100px;height:30px;float:left; ">
+            <font size="3 " color="white ">经度：<span id="longitude_show"></span></font>
+        </div>
+        <div style="width:100px;height:30px;float:left; ">
+            <font size="3 " color="white ">纬度：<span id="latitude_show"></span></font>
+        </div>
+        <div style="width:140px;height:30px;float:left; ">
+            <font size="3 " color="white ">视角高：<span id="altitude_show"></span>km</font>
+        </div>
+    </div>
+
+
+
+    <script src="wuhan_try.js "></script>
+</body>
+
+</html>
